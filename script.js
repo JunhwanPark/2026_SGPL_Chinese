@@ -13,6 +13,10 @@ const studyData = {
     // 동일한 방식으로 추가
 };
 
+// 지원할 속도 목록
+const playbackSpeeds = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5];
+let currentSpeedIndex = 4; // 기본값 1.0
+
 document.addEventListener('DOMContentLoaded', () => {
     const menuContainer = document.getElementById('menu-container');
 
@@ -47,6 +51,33 @@ document.addEventListener('DOMContentLoaded', () => {
         subjectDiv.appendChild(chapterList);
         menuContainer.appendChild(subjectDiv);
     }
+
+    // 속도 조절 버튼 이벤트 설정
+    const audioPlayer = document.getElementById('audio-player');
+    const speedDisplay = document.getElementById('speed-display');
+    const btnSpeedDown = document.getElementById('speed-down');
+    const btnSpeedUp = document.getElementById('speed-up');
+
+    function updateSpeed() {
+        const speed = playbackSpeeds[currentSpeedIndex];
+        audioPlayer.playbackRate = speed;
+        // 소수점 처리 (1.0, 0.5 등으로 깔끔하게 표시)
+        speedDisplay.textContent = Number.isInteger(speed) ? speed.toFixed(1) + 'x' : speed + 'x';
+    }
+
+    btnSpeedDown.addEventListener('click', () => {
+        if (currentSpeedIndex > 0) {
+            currentSpeedIndex--;
+            updateSpeed();
+        }
+    });
+
+    btnSpeedUp.addEventListener('click', () => {
+        if (currentSpeedIndex < playbackSpeeds.length - 1) {
+            currentSpeedIndex++;
+            updateSpeed();
+        }
+    });
 });
 
 async function loadContent(title, fileData) {
@@ -75,10 +106,17 @@ async function loadContent(title, fileData) {
     const audioContainer = document.getElementById('audio-container');
     const audioPlayer = document.getElementById('audio-player');
     const audioSource = document.getElementById('audio-source');
+    const speedDisplay = document.getElementById('speed-display');
 
     if (fileData.audioFile) {
         audioSource.src = fileData.audioFile;
         audioPlayer.load();
+
+        // 단원을 이동할 때마다 재생 속도를 1.0x로 초기화
+        currentSpeedIndex = 2;
+        audioPlayer.playbackRate = 1.0;
+        speedDisplay.textContent = '1.0x';
+
         audioContainer.classList.remove('hidden');
     } else {
         audioContainer.classList.add('hidden');

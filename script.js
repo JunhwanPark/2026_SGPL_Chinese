@@ -33,8 +33,41 @@ const studyData = {
             mdFile: "data/01-08.md",
             audioFile: "audio/01-08.mp3"
         },
+    },
+    "会议": {
+        "第一课 主持会议": {
+            mdFile: "data/02-01.md",
+            audioFile: "audio/02-01.mp3"
+        },
+        "第二课 表达意见": {
+            mdFile: "data/02-02.md",
+            audioFile: "audio/02-02.mp3"
+        },
+        "第三课 意外处理": {
+            mdFile: "data/02-03.md",
+            audioFile: "audio/02-03.mp3"
+        },
+        "第四课 会议总结": {
+            mdFile: "data/02-04.md",
+            audioFile: "audio/02-04.mp3"
+        },
+        "第五课 安排工作": {
+            mdFile: "data/02-05.md",
+            audioFile: "audio/02-05.mp3"
+        },
+        "第六课 解决问题": {
+            mdFile: "data/02-06.md",
+            audioFile: "audio/02-06.mp3"
+        },
+        "第七课 信息共享": {
+            mdFile: "data/02-07.md",
+            audioFile: "audio/02-07.mp3"
+        },
+        "第八课 工作督促": {
+            mdFile: "data/02-08.md",
+            audioFile: "audio/02-08.mp3"
+        },
     }
-    // 동일한 방식으로 추가
 };
 
 // 지원할 속도 목록

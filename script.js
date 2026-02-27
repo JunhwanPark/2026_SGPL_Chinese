@@ -101,7 +101,41 @@ const studyData = {
             mdFile: "data/03-08.md",
             audioFile: "audio/03-08.mp3"
         },
-    }
+    },
+    "交际": {
+        "第一课 介绍": {
+            mdFile: "data/04-01.md",
+            audioFile: "audio/04-01.mp3"
+        },
+        "第二课 宴请": {
+            mdFile: "data/04-02.md",
+            audioFile: "audio/04-02.mp3"
+        },
+        "第三课 酒文化": {
+            mdFile: "data/04-03.md",
+            audioFile: "audio/04-03.mp3"
+        },
+        "第四课 节日文化": {
+            mdFile: "data/04-04.md",
+            audioFile: "audio/04-04.mp3"
+        },
+        "第五课 微信": {
+            mdFile: "data/04-05.md",
+            audioFile: "audio/04-05.mp3"
+        },
+        "第六课 电话电邮": {
+            mdFile: "data/04-06.md",
+            audioFile: "audio/04-06.mp3"
+        },
+        "第七课 发言": {
+            mdFile: "data/04-07.md",
+            audioFile: "audio/04-07.mp3"
+        },
+        "第八课 演示": {
+            mdFile: "data/04-08.md",
+            audioFile: "audio/04-08.mp3"
+        },
+    },
 };
 
 // 지원할 속도 목록

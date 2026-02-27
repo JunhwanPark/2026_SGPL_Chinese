@@ -2,13 +2,37 @@
 const studyData = {
     "生活": {
         "第一课 用餐": {
-            mdFile: "data/shenghua_yongchan.md",
-            audioFile: "audio/shenghua_yongchan.mp3"
+            mdFile: "data/01-01.md",
+            audioFile: "audio/01-01.mp3"
         },
-        "단원 1: 인사하기 - 소단원 2": {
-            mdFile: "data/s1-c1-sub2.md",
-            audioFile: "audio/s1-c1-sub2.mp3"
-        }
+        "第二课 美食": {
+            mdFile: "data/01-02.md",
+            audioFile: "audio/01-02.mp3"
+        },
+        "第三课 出行": {
+            mdFile: "data/01-03.md",
+            audioFile: "audio/01-03.mp3"
+        },
+        "第四课 游玩": {
+            mdFile: "data/01-04.md",
+            audioFile: "audio/01-04.mp3"
+        },
+        "第五课 聊开车": {
+            mdFile: "data/01-05.md",
+            audioFile: "audio/01-05.mp3"
+        },
+        "第六课 爱好": {
+            mdFile: "data/01-06.md",
+            audioFile: "audio/01-06.mp3"
+        },
+        "第七课 聊购物": {
+            mdFile: "data/01-07.md",
+            audioFile: "audio/01-07.mp3"
+        },
+        "第八课 聊教育": {
+            mdFile: "data/01-08.md",
+            audioFile: "audio/01-08.mp3"
+        },
     }
     // 동일한 방식으로 추가
 };

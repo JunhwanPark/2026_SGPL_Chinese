@@ -1,0 +1,163 @@
+/* 기본 초기화 및 폰트 설정 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: center;
+}
+
+/* 전체 레이아웃 (데스크탑 기준 좌우 배치) */
+.container {
+    display: flex;
+    flex-direction: row;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    gap: 2rem;
+}
+
+/* 네비게이션 사이드바 */
+#sidebar {
+    flex: 1;
+    min-width: 250px;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.subject-group {
+    margin-bottom: 1rem;
+}
+
+.subject-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #eee;
+}
+
+.chapter-list {
+    list-style-type: none;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+    display: none; /* 기본적으로 접어둠 */
+}
+
+.chapter-list.active {
+    display: block;
+}
+
+.chapter-item {
+    padding: 0.4rem 0;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s;
+}
+
+.chapter-item:hover {
+    color: #3498db;
+    font-weight: bold;
+}
+
+/* 본문 영역 */
+#content-area {
+    flex: 3;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+#content-title {
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 0.5rem;
+}
+
+#audio-container {
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+audio {
+    width: 100%; /* 모바일에서 꽉 차게 */
+    outline: none;
+}
+
+#script-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+/* --- 마크다운 렌더링 스타일 --- */
+#script-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+#script-text h1, #script-text h2, #script-text h3 {
+    color: #2c3e50;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+#script-text p {
+    margin-bottom: 1rem;
+}
+
+#script-text strong {
+    color: #e74c3c; /* 굵은 글씨(한자나 핵심 단어)를 붉은색 계열로 강조 */
+}
+
+#script-text blockquote {
+    border-left: 4px solid #ccc;
+    margin: 1.5rem 0;
+    padding: 0.5rem 1rem;
+    background-color: #f1f1f1;
+    color: #555;
+}
+
+#script-text ul, #script-text ol {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 모바일 대응 (화면이 768px 이하일 때 위아래 배치로 변경) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    #sidebar {
+        order: 1;
+    }
+
+    #content-area {
+        order: 2;
+        padding: 1.5rem 1rem;
+    }
+}

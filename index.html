@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나의 중국어 학습장</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>📖 나의 중국어 학습장</h1>
+    </header>
+
+    <div class="container">
+        <nav id="sidebar">
+            <h2>목차</h2>
+            <div id="menu-container"></div>
+        </nav>
+
+        <main id="content-area">
+            <h2 id="content-title">학습할 단원을 선택해주세요.</h2>
+
+            <div id="audio-container" class="hidden">
+                <audio id="audio-player" controls>
+                    <source id="audio-source" src="" type="audio/mpeg">
+                    브라우저가 오디오 플레이어를 지원하지 않습니다.
+                </audio>
+            </div>
+
+            <div id="script-container" class="hidden">
+                <div id="script-text"></div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

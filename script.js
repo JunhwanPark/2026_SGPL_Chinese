@@ -67,6 +67,40 @@ const studyData = {
             mdFile: "data/02-08.md",
             audioFile: "audio/02-08.mp3"
         },
+    },
+    "管理": {
+        "第一课 招聘": {
+            mdFile: "data/03-01.md",
+            audioFile: "audio/03-01.mp3"
+        },
+        "第二课 入职": {
+            mdFile: "data/03-02.md",
+            audioFile: "audio/03-02.mp3"
+        },
+        "第三课 离职": {
+            mdFile: "data/03-03.md",
+            audioFile: "audio/03-03.mp3"
+        },
+        "第四课 业务进展": {
+            mdFile: "data/03-04.md",
+            audioFile: "audio/03-04.mp3"
+        },
+        "第五课 考核": {
+            mdFile: "data/03-05.md",
+            audioFile: "audio/03-05.mp3"
+        },
+        "第六课 指导": {
+            mdFile: "data/03-06.md",
+            audioFile: "audio/03-06.mp3"
+        },
+        "第七课 激励": {
+            mdFile: "data/03-07.md",
+            audioFile: "audio/03-07.mp3"
+        },
+        "第八课 情绪管理": {
+            mdFile: "data/03-08.md",
+            audioFile: "audio/03-08.mp3"
+        },
     }
 };
 

@@ -61,8 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateSpeed() {
         const speed = playbackSpeeds[currentSpeedIndex];
         audioPlayer.playbackRate = speed;
-        // 소수점 처리 (1.0, 0.5 등으로 깔끔하게 표시)
-        speedDisplay.textContent = Number.isInteger(speed) ? speed.toFixed(1) + 'x' : speed + 'x';
+        speedDisplay.textContent = speed.toFixed(1) + 'x';
     }
 
     btnSpeedDown.addEventListener('click', () => {
@@ -113,7 +112,7 @@ async function loadContent(title, fileData) {
         audioPlayer.load();
 
         // 단원을 이동할 때마다 재생 속도를 1.0x로 초기화
-        currentSpeedIndex = 2;
+        currentSpeedIndex = 4;
         audioPlayer.playbackRate = 1.0;
         speedDisplay.textContent = '1.0x';
 

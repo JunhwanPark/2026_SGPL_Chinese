@@ -162,7 +162,8 @@ document.addEventListener('DOMContentLoaded', () => {
             chapterItem.textContent = chapter;
 
             chapterItem.addEventListener('click', () => {
-                loadContent(chapter, studyData[subject][chapter]);
+                const displayTitle = `【${subject}】${chapter}`;
+                loadContent(displayTitle, studyData[subject][chapter]);
             });
 
             chapterList.appendChild(chapterItem);

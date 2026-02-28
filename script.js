@@ -305,15 +305,13 @@ const contentTitle = document.getElementById('content-title');
 const audioContainer = document.getElementById('audio-container');
 const scriptContainer = document.getElementById('script-container');
 const vocabContainer = document.getElementById('vocab-container');
-const sidebarTitle = document.getElementById('sidebar-title');
 
 // '본문 학습' 버튼 클릭 시
 modeStudyBtn.addEventListener('click', () => {
     modeStudyBtn.classList.add('active');
     modeVocabBtn.classList.remove('active');
 
-    // 목차 표시 및 본문 영역 복구
-    sidebarTitle.textContent = "목차";
+    // 본문 영역 복구
     menuContainer.style.display = 'block';
     vocabContainer.classList.add('hidden');
     contentTitle.style.display = 'block';
@@ -332,8 +330,7 @@ modeVocabBtn.addEventListener('click', () => {
     modeVocabBtn.classList.add('active');
     modeStudyBtn.classList.remove('active');
 
-    // 목차 숨기고 단어장 영역 표시
-    sidebarTitle.textContent = "단어장 메뉴";
+    // 단어장 영역 표시
     menuContainer.style.display = 'none';
     contentTitle.style.display = 'none';
     audioContainer.classList.add('hidden');

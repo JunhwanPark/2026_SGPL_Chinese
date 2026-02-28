@@ -319,7 +319,7 @@ modeStudyBtn.addEventListener('click', () => {
     // 이전에 선택해둔 본문이 있다면 다시 보여줌
     if (document.getElementById('script-text').innerHTML !== "") {
         scriptContainer.classList.remove('hidden');
-        if (document.getElementById('audio-source').src) {
+        if (document.getElementById('audio-source').src && !audioContainer.src.endsWith(location.origin + "/")) {
             audioContainer.classList.remove('hidden');
         }
     }

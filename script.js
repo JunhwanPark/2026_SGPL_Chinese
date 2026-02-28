@@ -419,21 +419,39 @@ function drawRandomVocab() {
             <div class="${meaningClass}">${item.meaning}</div>
         `;
 
-        // 마우스 누르거나 화면을 터치할 때 뜻 보여주기
-        card.addEventListener('pointerdown', () => {
-            card.classList.add('flipped');
+        // --- 👇 모바일 스크롤 방지 및 터치 동작 개선 부분 ---
+        let startY = 0;
+        let flipTimer;
+
+        // 1. 마우스를 누르거나 화면을 터치할 때
+        card.addEventListener('pointerdown', (e) => {
+            startY = e.clientY; // 터치한 시작점의 Y(세로) 좌표 기록
+
+            // 즉시 뒤집지 않고 0.1초(100ms) 대기
+            flipTimer = setTimeout(() => {
+                card.classList.add('flipped');
+            }, 100);
         });
 
-        // 마우스/터치를 떼거나 카드 밖으로 손(마우스)이 벗어나면 다시 숨기기
-        card.addEventListener('pointerup', () => {
-            card.classList.remove('flipped');
+        // 2. 손가락(또는 마우스)이 움직일 때 (스크롤 감지)
+        card.addEventListener('pointermove', (e) => {
+            // 위아래로 10px 이상 움직였다면 스크롤로 간주
+            if (Math.abs(e.clientY - startY) > 10) {
+                clearTimeout(flipTimer); // 뒤집기 취소
+                card.classList.remove('flipped'); // 이미 뒤집혔다면 닫기
+            }
         });
-        card.addEventListener('pointerleave', () => {
+
+        // 3. 카드를 다시 원래대로 덮는 공통 함수
+        const hideCard = () => {
+            clearTimeout(flipTimer);
             card.classList.remove('flipped');
-        });
-        card.addEventListener('pointercancel', () => {
-            card.classList.remove('flipped');
-        });
+        };
+
+        // 4. 손을 떼거나, 화면 밖으로 나가거나, 스크롤로 인해 터치가 취소될 때 모두 덮기
+        card.addEventListener('pointerup', hideCard);
+        card.addEventListener('pointerleave', hideCard);
+        card.addEventListener('pointercancel', hideCard);
 
         // 모바일에서 길게 눌렀을 때 복사 메뉴(컨텍스트 메뉴)가 뜨는 것 방지
         card.addEventListener('contextmenu', (e) => {

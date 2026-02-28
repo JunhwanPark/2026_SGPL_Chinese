@@ -140,7 +140,14 @@ const studyData = {
 
 const vocabFiles = [
     "vocab/v02-12.txt",
-    // 나중에 파일이 늘어나면 여기에 파일 경로만 추가하시면 됩니다.
+    "vocab/v02-13.txt",
+    "vocab/v02-19.txt",
+    "vocab/v02-20.txt",
+    "vocab/v02-23.txt",
+    "vocab/v02-24.txt",
+    "vocab/v02-25.txt",
+    "vocab/v02-26.txt",
+    "vocab/v02-27.txt",
 ];
 
 let allVocabData = []; // 여러 파일에서 읽어온 모든 단어를 담을 배열

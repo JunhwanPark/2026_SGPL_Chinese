@@ -15,7 +15,12 @@
 
     <div class="container">
         <nav id="sidebar">
-            <h2>목차</h2>
+            <div id="mode-switch">
+                <button id="mode-study" class="mode-btn active">📖 본문 학습</button>
+                <button id="mode-vocab" class="mode-btn">📇 단어장 연습</button>
+            </div>
+
+            <h2 id="sidebar-title">목차</h2>
             <div id="menu-container"></div>
         </nav>
 
@@ -38,6 +43,14 @@
 
             <div id="script-container" class="hidden">
                 <div id="script-text"></div>
+            </div>
+
+            <div id="vocab-container" class="hidden">
+                <div class="vocab-header">
+                    <h2>📇 랜덤 단어장 (10개)</h2>
+                    <button id="refresh-vocab-btn">🔄 새로운 단어 뽑기</button>
+                </div>
+                <div id="flashcard-grid"></div>
             </div>
         </main>
     </div>

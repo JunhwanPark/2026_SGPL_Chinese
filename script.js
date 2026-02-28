@@ -138,6 +138,13 @@ const studyData = {
     },
 };
 
+const vocabFiles = [
+    "vocab/v02-12.txt",
+    // 나중에 파일이 늘어나면 여기에 파일 경로만 추가하시면 됩니다.
+];
+
+let allVocabData = []; // 여러 파일에서 읽어온 모든 단어를 담을 배열
+
 // 지원할 속도 목록
 const playbackSpeeds = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5];
 let currentSpeedIndex = 4; // 기본값 1.0
@@ -279,3 +286,148 @@ async function loadContent(title, fileData) {
         audioContainer.classList.add('hidden');
     }
 }
+
+// ==========================================
+// 단어장 모드 및 플래시카드 관련 로직
+// ==========================================
+
+const modeStudyBtn = document.getElementById('mode-study');
+const modeVocabBtn = document.getElementById('mode-vocab');
+const menuContainer = document.getElementById('menu-container');
+const contentTitle = document.getElementById('content-title');
+const audioContainer = document.getElementById('audio-container');
+const scriptContainer = document.getElementById('script-container');
+const vocabContainer = document.getElementById('vocab-container');
+const sidebarTitle = document.getElementById('sidebar-title');
+
+// '본문 학습' 버튼 클릭 시
+modeStudyBtn.addEventListener('click', () => {
+    modeStudyBtn.classList.add('active');
+    modeVocabBtn.classList.remove('active');
+
+    // 목차 표시 및 본문 영역 복구
+    sidebarTitle.textContent = "목차";
+    menuContainer.style.display = 'block';
+    vocabContainer.classList.add('hidden');
+    contentTitle.style.display = 'block';
+
+    // 이전에 선택해둔 본문이 있다면 다시 보여줌
+    if (document.getElementById('script-text').innerHTML !== "") {
+        scriptContainer.classList.remove('hidden');
+        if (document.getElementById('audio-source').src) {
+            audioContainer.classList.remove('hidden');
+        }
+    }
+});
+
+// '단어장 연습' 버튼 클릭 시
+modeVocabBtn.addEventListener('click', () => {
+    modeVocabBtn.classList.add('active');
+    modeStudyBtn.classList.remove('active');
+
+    // 목차 숨기고 단어장 영역 표시
+    sidebarTitle.textContent = "단어장 메뉴";
+    menuContainer.style.display = 'none';
+    contentTitle.style.display = 'none';
+    audioContainer.classList.add('hidden');
+    scriptContainer.classList.add('hidden');
+    vocabContainer.classList.remove('hidden');
+
+    // 단어 데이터가 비어있으면 파일에서 불러오기
+    if (allVocabData.length === 0) {
+        loadAllVocabAndDraw();
+    }
+});
+
+// 여러 개의 텍스트 파일에서 단어를 불러와 하나로 합치는 함수
+async function loadAllVocabAndDraw() {
+    allVocabData = []; // 초기화
+
+    for (const file of vocabFiles) {
+        try {
+            const response = await fetch(file);
+            if (response.ok) {
+                const text = await response.text();
+                // 줄바꿈 기준으로 분리
+                const lines = text.split('\n');
+
+                lines.forEach(line => {
+                    // 빈 줄 무시
+                    if (line.trim() !== '') {
+                        // ' / ' 를 기준으로 단어/병음/뜻 분리
+                        const parts = line.split(' / ');
+                        if (parts.length >= 3) {
+                            // 정규식을 사용하여 맨 앞의 '숫자 + 마침표 + 공백'을 제거합니다. (예: "1. 参观" -> "参观")
+                            let pureWord = parts[0].trim().replace(/^\d+\.\s*/, '');
+
+                            allVocabData.push({
+                                word: pureWord,
+                                pinyin: parts[1].trim(),
+                                meaning: parts[2].trim()
+                            });
+                        }
+                    }
+                });
+            }
+        } catch (error) {
+            console.error(`단어장 파일 로드 실패 (${file}):`, error);
+        }
+    }
+
+    // 데이터를 모두 불러온 후 10개 랜덤 뽑기 실행
+    drawRandomVocab();
+}
+
+// 랜덤으로 10개를 뽑아 화면에 카드로 만드는 함수
+function drawRandomVocab() {
+    const grid = document.getElementById('flashcard-grid');
+    grid.innerHTML = ''; // 기존 카드 지우기
+
+    if (allVocabData.length === 0) {
+        grid.innerHTML = '<p>단어장 데이터를 불러오지 못했습니다. txt 파일 경로와 형식을 확인해 주세요.</p>';
+        return;
+    }
+
+    // 전체 단어 배열을 무작위로 섞기 (Fisher-Yates 알고리즘 응용)
+    const shuffled = [...allVocabData].sort(() => 0.5 - Math.random());
+    // 섞은 배열에서 10개만 추출 (단어가 10개 미만이면 있는 만큼만 추출)
+    const selected = shuffled.slice(0, 10);
+
+    selected.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'flashcard';
+
+        // 카드 안의 HTML 구성
+        card.innerHTML = `
+            <div class="fc-word">${item.word}</div>
+            <div class="fc-pinyin">${item.pinyin}</div>
+            <div class="fc-meaning">${item.meaning}</div>
+        `;
+
+        // 마우스 누르거나 화면을 터치할 때 뜻 보여주기
+        card.addEventListener('pointerdown', () => {
+            card.classList.add('flipped');
+        });
+
+        // 마우스/터치를 떼거나 카드 밖으로 손(마우스)이 벗어나면 다시 숨기기
+        card.addEventListener('pointerup', () => {
+            card.classList.remove('flipped');
+        });
+        card.addEventListener('pointerleave', () => {
+            card.classList.remove('flipped');
+        });
+        card.addEventListener('pointercancel', () => {
+            card.classList.remove('flipped');
+        });
+
+        // 모바일에서 길게 눌렀을 때 복사 메뉴(컨텍스트 메뉴)가 뜨는 것 방지
+        card.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        grid.appendChild(card);
+    });
+}
+
+// '새로운 단어 뽑기' 버튼 클릭 이벤트
+document.getElementById('refresh-vocab-btn').addEventListener('click', drawRandomVocab);

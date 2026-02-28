@@ -170,6 +170,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         subjectTitle.addEventListener('click', () => {
+            // 1. 화면에 있는 모든 단원 리스트(.chapter-list)를 찾습니다.
+            const allChapterLists = document.querySelectorAll('.chapter-list');
+
+            // 2. 모든 리스트를 순회하면서, 현재 클릭한 과목의 리스트가 아닌 것은 모두 닫습니다.
+            allChapterLists.forEach(list => {
+                if (list !== chapterList) {
+                    list.classList.remove('active');
+                }
+            });
+
+            // 3. 마지막으로 현재 클릭한 과목의 리스트만 열기/닫기를 토글합니다.
             chapterList.classList.toggle('active');
         });
 

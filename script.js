@@ -203,6 +203,27 @@ document.addEventListener('DOMContentLoaded', () => {
             updateSpeed();
         }
     });
+
+    // --- Top 버튼 스크롤 이벤트 및 클릭 동작 추가 ---
+    const topBtn = document.getElementById("top-btn");
+
+    // 화면을 스크롤할 때마다 실행
+    window.addEventListener('scroll', () => {
+        // 화면이 위에서부터 150px 이상 내려오면 버튼 표시, 아니면 숨김
+        if (document.body.scrollTop > 150 || document.documentElement.scrollTop > 150) {
+            topBtn.style.display = "block";
+        } else {
+            topBtn.style.display = "none";
+        }
+    });
+
+    // Top 버튼 클릭 시 맨 위로 부드럽게 이동
+    topBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // 스크롤이 뚝 끊기지 않고 부드럽게 올라가도록 설정
+        });
+    });
 });
 
 async function loadContent(title, fileData) {

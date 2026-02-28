@@ -473,3 +473,55 @@ function drawRandomVocab() {
 
 // '새로운 단어 뽑기' 버튼 클릭 이벤트
 document.getElementById('refresh-vocab-btn').addEventListener('click', drawRandomVocab);
+
+// ==========================================
+// 위챗 연락처 팝업(모달) 로직
+// ==========================================
+const wechatLink = document.getElementById('wechat-link');
+const wechatModal = document.getElementById('wechat-modal');
+const closeModal = document.getElementById('close-modal');
+
+// 이름 클릭 시 모달 열기
+wechatLink.addEventListener('click', (e) => {
+    e.preventDefault(); // 링크 클릭 시 페이지 맨 위로 튕기는 기본 현상 방지
+    wechatModal.classList.remove('hidden');
+});
+
+// X 버튼 클릭 시 모달 닫기
+closeModal.addEventListener('click', () => {
+    wechatModal.classList.add('hidden');
+});
+
+// 팝업 창 바깥의 어두운 배경을 클릭해도 닫히게 만들기
+wechatModal.addEventListener('click', (e) => {
+    if (e.target === wechatModal) {
+        wechatModal.classList.add('hidden');
+    }
+});
+
+// ID 복사하기 기능
+const copyIdBtn = document.getElementById('copy-id-btn');
+const wechatIdText = document.getElementById('wechat-id');
+
+copyIdBtn.addEventListener('click', async () => {
+    try {
+        // 클립보드에 텍스트 복사
+        await navigator.clipboard.writeText(wechatIdText.innerText);
+
+        // 버튼 글씨와 색상을 '복사 완료' 상태로 변경
+        const originalText = copyIdBtn.innerText;
+        copyIdBtn.innerText = '✅ 복사 완료!';
+        copyIdBtn.classList.add('copied');
+
+        // 2초(2000ms) 뒤에 원래 버튼 상태로 복구
+        setTimeout(() => {
+            copyIdBtn.innerText = originalText;
+            copyIdBtn.classList.remove('copied');
+        }, 2000);
+
+    } catch (err) {
+        // 구형 브라우저나 보안 설정으로 인해 복사가 실패할 경우
+        console.error('복사 실패:', err);
+        alert('복사를 지원하지 않는 환경입니다. 위챗 ID를 직접 드래그해서 복사해 주세요.');
+    }
+});

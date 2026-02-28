@@ -315,11 +315,11 @@ footer {
     background: white;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
-    padding: 25px 20px;
+    padding: 15px 20px;
     text-align: center;
     cursor: pointer;
-    height: 140px;
-    overflow-y: auto; /* 혹시라도 글이 너무 길면 카드 안에서 스크롤되도록 안전장치 */
+    height: 160px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -336,9 +336,10 @@ footer {
 }
 
 .fc-word {
-    font-size: 2rem;
+    font-size: 2.8rem;
     font-weight: bold;
     color: #2c3e50;
+    line-height: 1.1;
     margin-bottom: 5px;
 }
 

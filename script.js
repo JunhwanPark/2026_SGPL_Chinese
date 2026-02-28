@@ -178,6 +178,10 @@ document.addEventListener('DOMContentLoaded', () => {
             chapterItem.addEventListener('click', () => {
                 const displayTitle = `【${subject}】${chapter}`;
                 loadContent(displayTitle, studyData[subject][chapter]);
+
+                if (window.innerWidth <= 768) {
+                    document.getElementById('content-area').scrollIntoView({ behavior: 'smooth' });
+                }
             });
 
             chapterList.appendChild(chapterItem);

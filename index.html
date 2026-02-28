@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>주재8반 学习</title>
     <link rel="icon" href="favicon-32x32.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -57,8 +58,18 @@
     <button id="top-btn" title="맨 위로 가기">↑ Top</button>
 
     <footer>
-        <p>&copy; 2026 Junhwan Park. All rights reserved.</p>
+        <p>&copy; 2026 <a href="#" id="wechat-link">Junhwan Park</a>. All rights reserved.</p>
     </footer>
+
+    <div id="wechat-modal" class="hidden">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h3><i class="fab fa-weixin" style="color: #1AAD19;"></i> WeChat 연락처</h3>
+            <p>위챗 ID: <strong id="wechat-id">piao3jun4huan4</strong></p>
+            <button id="copy-id-btn" class="copy-btn">ID 복사하기</button>
+            <p class="modal-desc">ID를 복사하여 위챗에서 친구 추가를 해주세요!</p>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>

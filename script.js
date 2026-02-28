@@ -337,6 +337,11 @@ modeVocabBtn.addEventListener('click', () => {
     modeVocabBtn.classList.add('active');
     modeStudyBtn.classList.remove('active');
 
+    const audioPlayer = document.getElementById('audio-player');
+    if (audioPlayer) {
+        audioPlayer.pause();
+    }
+
     // 단어장 영역 표시
     menuContainer.style.display = 'none';
     contentTitle.style.display = 'none';

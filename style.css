@@ -318,7 +318,8 @@ footer {
     padding: 25px 20px;
     text-align: center;
     cursor: pointer;
-    min-height: 130px;
+    height: 140px;
+    overflow-y: auto; /* 혹시라도 글이 너무 길면 카드 안에서 스크롤되도록 안전장치 */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -361,4 +362,16 @@ footer {
 
 .flashcard.flipped .fc-meaning {
     display: block;
+}
+
+/* 글자가 약간 길 때 */
+.fc-meaning.long-text {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+/* 글자가 아주 길 때 */
+.fc-meaning.super-long {
+    font-size: 0.95rem;
+    line-height: 1.4;
 }

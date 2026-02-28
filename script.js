@@ -404,11 +404,19 @@ function drawRandomVocab() {
         const card = document.createElement('div');
         card.className = 'flashcard';
 
-        // 카드 안의 HTML 구성
+        // 👇 한글 뜻의 길이에 따라 적용할 CSS 클래스를 결정합니다.
+        let meaningClass = 'fc-meaning';
+        if (item.meaning.length > 25) {
+            meaningClass += ' super-long'; // 25자 초과 시 아주 작게
+        } else if (item.meaning.length > 12) {
+            meaningClass += ' long-text';  // 12자 초과 시 약간 작게
+        }
+
+        // 카드 안의 HTML 구성 (결정된 클래스를 적용)
         card.innerHTML = `
             <div class="fc-word">${item.word}</div>
             <div class="fc-pinyin">${item.pinyin}</div>
-            <div class="fc-meaning">${item.meaning}</div>
+            <div class="${meaningClass}">${item.meaning}</div>
         `;
 
         // 마우스 누르거나 화면을 터치할 때 뜻 보여주기

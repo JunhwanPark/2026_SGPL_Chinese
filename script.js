@@ -290,6 +290,7 @@ async function loadContent(title, fileData) {
 
         audioContainer.classList.remove('hidden');
     } else {
+        audioSource.removeAttribute('src');
         audioContainer.classList.add('hidden');
     }
 }
@@ -311,15 +312,17 @@ modeStudyBtn.addEventListener('click', () => {
     modeStudyBtn.classList.add('active');
     modeVocabBtn.classList.remove('active');
 
-    // 본문 영역 복구
+    // 본문 영역 기본 UI 복구
     menuContainer.style.display = 'block';
     vocabContainer.classList.add('hidden');
     contentTitle.style.display = 'block';
 
-    // 이전에 선택해둔 본문이 있다면 다시 보여줌
-    if (document.getElementById('script-text').innerHTML !== "") {
+    // 이전에 선택해둔 본문 텍스트가 있다면 스크립트 영역 표시
+    if (document.getElementById('script-text').innerHTML.trim() !== "") {
         scriptContainer.classList.remove('hidden');
-        if (document.getElementById('audio-source').src && !audioContainer.src.endsWith(location.origin + "/")) {
+
+        const audioSource = document.getElementById('audio-source');
+        if (audioSource.getAttribute('src')) {
             audioContainer.classList.remove('hidden');
         }
     }

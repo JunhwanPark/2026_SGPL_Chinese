@@ -270,11 +270,37 @@ footer {
     font-weight: bold;
     color: #7f8c8d;
     transition: background-color 0.2s, color 0.2s;
+    font-size: 0.9rem;
 }
 
 .mode-btn.active {
     background: #3498db;
     color: white;
+}
+
+/* --- CiC 커뮤니티 링크 버튼 --- */
+#cic-link-btn {
+    display: block;
+    background-color: #9b59b6; /* 시각적으로 구분되는 보라색 포인트 */
+    color: white;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+#cic-link-btn:hover {
+    background-color: #8e44ad;
+    transform: translateY(-2px); /* 마우스를 올리면 살짝 위로 떠오르는 효과 */
+}
+
+#cic-link-btn i {
+    margin-right: 5px;
 }
 
 /* --- 단어장 영역 --- */

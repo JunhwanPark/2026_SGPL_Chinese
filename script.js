@@ -176,6 +176,15 @@ document.addEventListener('DOMContentLoaded', () => {
             chapterItem.textContent = chapter;
 
             chapterItem.addEventListener('click', () => {
+                // 기존에 강조된 모든 단원의 강조 효과(.active-chapter) 제거
+                const allChapterItems = document.querySelectorAll('.chapter-list li');
+                allChapterItems.forEach(item => {
+                    item.classList.remove('active-chapter');
+                });
+
+                // 지금 클릭한 단원에만 강조 효과를 추가
+                chapterItem.classList.add('active-chapter');
+
                 const displayTitle = `【${subject}】${chapter}`;
                 loadContent(displayTitle, studyData[subject][chapter]);
 

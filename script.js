@@ -1,6 +1,6 @@
 // 학습 데이터 구조
 const studyData = {
-    "生活": {
+    "生活篇(中级)": {
         "第一课 用餐": {
             mdFile: "data/01-01.md",
             audioFile: "audio/01-01.mp3"
@@ -34,7 +34,7 @@ const studyData = {
             audioFile: "audio/01-08.mp3"
         },
     },
-    "会议": {
+    "会议篇(中级)": {
         "第一课 主持会议": {
             mdFile: "data/02-01.md",
             audioFile: "audio/02-01.mp3"
@@ -68,7 +68,7 @@ const studyData = {
             audioFile: "audio/02-08.mp3"
         },
     },
-    "管理": {
+    "管理篇(中级)": {
         "第一课 招聘": {
             mdFile: "data/03-01.md",
             audioFile: "audio/03-01.mp3"
@@ -102,7 +102,7 @@ const studyData = {
             audioFile: "audio/03-08.mp3"
         },
     },
-    "交际": {
+    "交际篇(中级)": {
         "第一课 介绍": {
             mdFile: "data/04-01.md",
             audioFile: "audio/04-01.mp3"

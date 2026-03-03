@@ -148,6 +148,7 @@ const vocabFiles = [
     "vocab/v02-25.txt",
     "vocab/v02-26.txt",
     "vocab/v02-27.txt",
+    "vocab/v03-03.txt",
 ];
 
 let allVocabData = []; // 여러 파일에서 읽어온 모든 단어를 담을 배열

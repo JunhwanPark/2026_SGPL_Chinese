@@ -152,9 +152,9 @@ const vocabFiles = [
     "vocab/v03-04.txt",
 ];
 
-let allVocabData = [];      // 1. 전체 단어를 담을 배열
-let vocabByFile = [];       // 2. 파일별 단어를 따로 묶어서 담을 배열
-let currentVocabPool = [];  // 3. 현재 뽑기 대상 (전체 or 특정 파일)
+let allVocabData = [];
+let vocabByFile = [];
+let currentVocabPool = [];
 
 // 지원할 속도 목록
 const playbackSpeeds = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5];
@@ -319,6 +319,7 @@ async function loadContent(title, fileData) {
 const modeStudyBtn = document.getElementById('mode-study');
 const modeVocabBtn = document.getElementById('mode-vocab');
 const menuContainer = document.getElementById('menu-container');
+const vocabMenuContainer = document.getElementById('vocab-menu-container');
 const contentTitle = document.getElementById('content-title');
 const audioContainer = document.getElementById('audio-container');
 const scriptContainer = document.getElementById('script-container');
@@ -328,7 +329,11 @@ const vocabContainer = document.getElementById('vocab-container');
 modeStudyBtn.addEventListener('click', () => {
     modeStudyBtn.classList.add('active');
     modeVocabBtn.classList.remove('active');
+
+    // 본문 목차 켜고, 단어장 목차 숨기기
     menuContainer.style.display = 'block';
+    vocabMenuContainer.classList.add('hidden');
+
     vocabContainer.classList.add('hidden');
     contentTitle.style.display = 'block';
     if (document.getElementById('script-text').innerHTML.trim() !== "") {
@@ -344,9 +349,14 @@ modeStudyBtn.addEventListener('click', () => {
 modeVocabBtn.addEventListener('click', () => {
     modeVocabBtn.classList.add('active');
     modeStudyBtn.classList.remove('active');
+
     const audioPlayer = document.getElementById('audio-player');
     if (audioPlayer) audioPlayer.pause();
+
+    // 본문 목차 숨기고, 단어장 목차 켜기
     menuContainer.style.display = 'none';
+    vocabMenuContainer.classList.remove('hidden');
+
     contentTitle.style.display = 'none';
     audioContainer.classList.add('hidden');
     scriptContainer.classList.add('hidden');
@@ -357,7 +367,7 @@ modeVocabBtn.addEventListener('click', () => {
     }
 });
 
-// 여러 개의 텍스트 파일에서 단어를 불러와 하나로 합치는 함수
+// 데이터를 불러오고 파일별로 분류하는 함수
 async function loadAllVocabAndDraw() {
     allVocabData = [];
     vocabByFile = [];
@@ -367,78 +377,83 @@ async function loadAllVocabAndDraw() {
 
     for (let i = 0; i < responses.length; i++) {
         const response = responses[i];
-        let fileVocab = []; // 해당 파일(번호)의 단어만 임시 보관
+        let fileVocab = [];
 
         if (response && response.ok) {
             try {
                 const text = await response.text();
                 const lines = text.split('\n');
-
                 lines.forEach(line => {
                     if (line.trim() !== '') {
                         const parts = line.split(/\s*\/\s*/);
                         if (parts.length >= 3) {
                             let pureWord = parts[0].trim().replace(/^\d+\.\s*/, '');
-                            const vocabItem = {
-                                word: pureWord,
-                                pinyin: parts[1].trim(),
-                                meaning: parts[2].trim()
-                            };
-                            fileVocab.push(vocabItem); // 개별 폴더에 쏙
-                            allVocabData.push(vocabItem); // 전체 폴더에도 쏙
+                            const vocabItem = { word: pureWord, pinyin: parts[1].trim(), meaning: parts[2].trim() };
+                            fileVocab.push(vocabItem);
+                            allVocabData.push(vocabItem);
                         }
                     }
                 });
-            } catch (error) {
-                console.error('파일 읽기 오류:', error);
-            }
+            } catch (error) { console.error('파일 읽기 오류:', error); }
         }
-        vocabByFile.push(fileVocab); // 1번 파일, 2번 파일 순서대로 저장
+        vocabByFile.push(fileVocab);
     }
 
-    currentVocabPool = allVocabData; // 첫 로딩 시 기본값은 '전체'
-    renderVocabFilters(); // 번호 버튼 그리기
-    drawRandomVocab();    // 카드 그리기
+    currentVocabPool = allVocabData;
+    renderVocabMenu(); // 👈 목차 생성 함수 호출
+    drawRandomVocab();
 }
 
 // 1, 2, 3... 번호 버튼을 화면에 그리는 함수
-function renderVocabFilters() {
-    const filterContainer = document.getElementById('vocab-filters');
-    if (!filterContainer) return;
+function renderVocabMenu() {
+    if (!vocabMenuContainer) return;
+    vocabMenuContainer.innerHTML = '';
 
-    filterContainer.innerHTML = '';
+    // 버튼들을 담을 가로 정렬 박스
+    const filterDiv = document.createElement('div');
+    filterDiv.className = 'vocab-filter-container';
 
     // 1. '전체' 버튼 생성
     const allBtn = document.createElement('button');
-    allBtn.className = 'filter-btn active'; // 처음엔 전체가 눌려있음
+    allBtn.className = 'vocab-filter-btn active';
     allBtn.textContent = '전체';
     allBtn.addEventListener('click', () => {
-        setActiveFilter(allBtn);
-        currentVocabPool = allVocabData; // 대상을 전체로 변경
+        setActiveVocabBtn(allBtn);
+        currentVocabPool = allVocabData;
         drawRandomVocab();
+        scrollToContent(); // 모바일 자동 스크롤
     });
-    filterContainer.appendChild(allBtn);
+    filterDiv.appendChild(allBtn);
 
-    // 2. 텍스트 파일 개수만큼 '1, 2, 3...' 버튼 생성
+    // 2. 텍스트 파일 개수만큼 '1, 2, 3...' 숫자 버튼 생성
     vocabFiles.forEach((_, index) => {
-        if (vocabByFile[index].length === 0) return; // 내용이 없는 파일은 버튼 생략
+        if (vocabByFile[index].length === 0) return;
 
         const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.textContent = `${index + 1}`; // 배열은 0부터 시작하므로 +1
+        btn.className = 'vocab-filter-btn';
+        btn.textContent = `${index + 1}`; // 글씨 대신 깔끔하게 숫자만 넣습니다
         btn.addEventListener('click', () => {
-            setActiveFilter(btn);
-            currentVocabPool = vocabByFile[index]; // 대상을 해당 파일로 한정
+            setActiveVocabBtn(btn);
+            currentVocabPool = vocabByFile[index];
             drawRandomVocab();
+            scrollToContent(); // 모바일 자동 스크롤
         });
-        filterContainer.appendChild(btn);
+        filterDiv.appendChild(btn);
     });
+
+    vocabMenuContainer.appendChild(filterDiv);
 }
 
-// 클릭한 버튼에만 파란색(active) 색칠을 해주는 보조 함수
-function setActiveFilter(clickedBtn) {
-    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+function setActiveVocabBtn(clickedBtn) {
+    document.querySelectorAll('.vocab-filter-btn').forEach(btn => btn.classList.remove('active'));
     clickedBtn.classList.add('active');
+}
+
+// 모바일 환경에서 클릭 시 콘텐츠 영역으로 부드럽게 스크롤하는 함수
+function scrollToContent() {
+    if (window.innerWidth <= 768) {
+        document.getElementById('content-area').scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
 // 랜덤으로 10개를 뽑아 화면에 카드로 만드는 함수

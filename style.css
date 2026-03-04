@@ -509,16 +509,16 @@ footer a:hover {
     border-radius: 4px; /* 배경 모서리를 둥글게 */
 }
 
-/* --- 단어장 필터 (번호 버튼) --- */
-.vocab-filters {
+/* --- 단어장 사이드바 숫자 버튼 스타일 --- */
+.vocab-filter-container {
     display: flex;
     gap: 8px;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap; /* 버튼이 많아지면 다음 줄로 부드럽게 넘김 */
+    flex-wrap: wrap; /* 공간이 모자라면 자동으로 다음 줄로 넘김 */
+    padding: 10px 0;
 }
 
-.filter-btn {
-    padding: 6px 14px;
+.vocab-filter-btn {
+    padding: 8px 16px;
     border: 2px solid #3498db;
     background: white;
     color: #3498db;
@@ -529,11 +529,11 @@ footer a:hover {
     transition: all 0.2s;
 }
 
-.filter-btn:hover {
+.vocab-filter-btn:hover {
     background: #ebf5fb;
 }
 
-.filter-btn.active {
+.vocab-filter-btn.active {
     background: #3498db;
     color: white;
 }

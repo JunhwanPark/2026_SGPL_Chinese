@@ -152,7 +152,9 @@ const vocabFiles = [
     "vocab/v03-04.txt",
 ];
 
-let allVocabData = []; // 여러 파일에서 읽어온 모든 단어를 담을 배열
+let allVocabData = [];      // 1. 전체 단어를 담을 배열
+let vocabByFile = [];       // 2. 파일별 단어를 따로 묶어서 담을 배열
+let currentVocabPool = [];  // 3. 현재 뽑기 대상 (전체 or 특정 파일)
 
 // 지원할 속도 목록
 const playbackSpeeds = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5];
@@ -326,16 +328,11 @@ const vocabContainer = document.getElementById('vocab-container');
 modeStudyBtn.addEventListener('click', () => {
     modeStudyBtn.classList.add('active');
     modeVocabBtn.classList.remove('active');
-
-    // 본문 영역 기본 UI 복구
     menuContainer.style.display = 'block';
     vocabContainer.classList.add('hidden');
     contentTitle.style.display = 'block';
-
-    // 이전에 선택해둔 본문 텍스트가 있다면 스크립트 영역 표시
     if (document.getElementById('script-text').innerHTML.trim() !== "") {
         scriptContainer.classList.remove('hidden');
-
         const audioSource = document.getElementById('audio-source');
         if (audioSource.getAttribute('src')) {
             audioContainer.classList.remove('hidden');
@@ -347,20 +344,14 @@ modeStudyBtn.addEventListener('click', () => {
 modeVocabBtn.addEventListener('click', () => {
     modeVocabBtn.classList.add('active');
     modeStudyBtn.classList.remove('active');
-
     const audioPlayer = document.getElementById('audio-player');
-    if (audioPlayer) {
-        audioPlayer.pause();
-    }
-
-    // 단어장 영역 표시
+    if (audioPlayer) audioPlayer.pause();
     menuContainer.style.display = 'none';
     contentTitle.style.display = 'none';
     audioContainer.classList.add('hidden');
     scriptContainer.classList.add('hidden');
     vocabContainer.classList.remove('hidden');
 
-    // 단어 데이터가 비어있으면 파일에서 불러오기
     if (allVocabData.length === 0) {
         loadAllVocabAndDraw();
     }
@@ -368,123 +359,154 @@ modeVocabBtn.addEventListener('click', () => {
 
 // 여러 개의 텍스트 파일에서 단어를 불러와 하나로 합치는 함수
 async function loadAllVocabAndDraw() {
-    allVocabData = []; // 초기화
+    allVocabData = [];
+    vocabByFile = [];
 
-    for (const file of vocabFiles) {
-        try {
-            const response = await fetch(file);
-            if (response.ok) {
+    const fetchPromises = vocabFiles.map(file => fetch(file).catch(() => null));
+    const responses = await Promise.all(fetchPromises);
+
+    for (let i = 0; i < responses.length; i++) {
+        const response = responses[i];
+        let fileVocab = []; // 해당 파일(번호)의 단어만 임시 보관
+
+        if (response && response.ok) {
+            try {
                 const text = await response.text();
-                // 줄바꿈 기준으로 분리
                 const lines = text.split('\n');
 
                 lines.forEach(line => {
-                    // 빈 줄 무시
                     if (line.trim() !== '') {
-                        // ' / ' 를 기준으로 단어/병음/뜻 분리
-                        const parts = line.split(' / ');
+                        const parts = line.split(/\s*\/\s*/);
                         if (parts.length >= 3) {
-                            // 정규식을 사용하여 맨 앞의 '숫자 + 마침표 + 공백'을 제거합니다. (예: "1. 参观" -> "参观")
                             let pureWord = parts[0].trim().replace(/^\d+\.\s*/, '');
-
-                            allVocabData.push({
+                            const vocabItem = {
                                 word: pureWord,
                                 pinyin: parts[1].trim(),
                                 meaning: parts[2].trim()
-                            });
+                            };
+                            fileVocab.push(vocabItem); // 개별 폴더에 쏙
+                            allVocabData.push(vocabItem); // 전체 폴더에도 쏙
                         }
                     }
                 });
+            } catch (error) {
+                console.error('파일 읽기 오류:', error);
             }
-        } catch (error) {
-            console.error(`단어장 파일 로드 실패 (${file}):`, error);
         }
+        vocabByFile.push(fileVocab); // 1번 파일, 2번 파일 순서대로 저장
     }
 
-    // 데이터를 모두 불러온 후 10개 랜덤 뽑기 실행
-    drawRandomVocab();
+    currentVocabPool = allVocabData; // 첫 로딩 시 기본값은 '전체'
+    renderVocabFilters(); // 번호 버튼 그리기
+    drawRandomVocab();    // 카드 그리기
+}
+
+// 1, 2, 3... 번호 버튼을 화면에 그리는 함수
+function renderVocabFilters() {
+    const filterContainer = document.getElementById('vocab-filters');
+    if (!filterContainer) return;
+
+    filterContainer.innerHTML = '';
+
+    // 1. '전체' 버튼 생성
+    const allBtn = document.createElement('button');
+    allBtn.className = 'filter-btn active'; // 처음엔 전체가 눌려있음
+    allBtn.textContent = '전체';
+    allBtn.addEventListener('click', () => {
+        setActiveFilter(allBtn);
+        currentVocabPool = allVocabData; // 대상을 전체로 변경
+        drawRandomVocab();
+    });
+    filterContainer.appendChild(allBtn);
+
+    // 2. 텍스트 파일 개수만큼 '1, 2, 3...' 버튼 생성
+    vocabFiles.forEach((_, index) => {
+        if (vocabByFile[index].length === 0) return; // 내용이 없는 파일은 버튼 생략
+
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.textContent = `${index + 1}`; // 배열은 0부터 시작하므로 +1
+        btn.addEventListener('click', () => {
+            setActiveFilter(btn);
+            currentVocabPool = vocabByFile[index]; // 대상을 해당 파일로 한정
+            drawRandomVocab();
+        });
+        filterContainer.appendChild(btn);
+    });
+}
+
+// 클릭한 버튼에만 파란색(active) 색칠을 해주는 보조 함수
+function setActiveFilter(clickedBtn) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    clickedBtn.classList.add('active');
 }
 
 // 랜덤으로 10개를 뽑아 화면에 카드로 만드는 함수
 function drawRandomVocab() {
     const grid = document.getElementById('flashcard-grid');
-    grid.innerHTML = ''; // 기존 카드 지우기
+    grid.innerHTML = '';
 
-    if (allVocabData.length === 0) {
-        grid.innerHTML = '<p>단어장 데이터를 불러오지 못했습니다. txt 파일 경로와 형식을 확인해 주세요.</p>';
+    // 기존의 allVocabData 대신 currentVocabPool을 검사하고 사용합니다
+    if (currentVocabPool.length === 0) {
+        grid.innerHTML = '<p>단어장 데이터가 없습니다.</p>';
         return;
     }
 
-    // 중복 제거: 한자(word)를 기준으로 중복된 단어를 하나로 합칩니다.
+    // 중복 제거 작업
     const uniqueVocabMap = new Map();
-    allVocabData.forEach(item => {
-        // Map은 키(key)가 중복되면 마지막 값으로 덮어쓰기 때문에 자동으로 중복이 제거됩니다.
+    currentVocabPool.forEach(item => {
         uniqueVocabMap.set(item.word, item);
     });
     const uniqueVocabData = Array.from(uniqueVocabMap.values());
 
-    // 중복이 제거된 깨끗한 배열을 무작위로 섞습니다.
+    // 섞어서 10개 추출
     const shuffled = [...uniqueVocabData].sort(() => 0.5 - Math.random());
-
     const selected = shuffled.slice(0, 10);
 
     selected.forEach(item => {
         const card = document.createElement('div');
         card.className = 'flashcard';
 
-        // 👇 한글 뜻의 길이에 따라 적용할 CSS 클래스를 결정합니다.
         let meaningClass = 'fc-meaning';
         if (item.meaning.length > 25) {
-            meaningClass += ' super-long'; // 25자 초과 시 아주 작게
+            meaningClass += ' super-long';
         } else if (item.meaning.length > 12) {
-            meaningClass += ' long-text';  // 12자 초과 시 약간 작게
+            meaningClass += ' long-text';
         }
 
-        // 카드 안의 HTML 구성 (결정된 클래스를 적용)
         card.innerHTML = `
             <div class="fc-word">${item.word}</div>
             <div class="fc-pinyin">${item.pinyin}</div>
             <div class="${meaningClass}">${item.meaning}</div>
         `;
 
-        // --- 👇 모바일 스크롤 방지 및 터치 동작 개선 부분 ---
+        // 모바일 터치 처리 로직
         let startY = 0;
         let flipTimer;
 
-        // 1. 마우스를 누르거나 화면을 터치할 때
         card.addEventListener('pointerdown', (e) => {
-            startY = e.clientY; // 터치한 시작점의 Y(세로) 좌표 기록
-
-            // 즉시 뒤집지 않고 0.1초(100ms) 대기
+            startY = e.clientY;
             flipTimer = setTimeout(() => {
                 card.classList.add('flipped');
             }, 100);
         });
 
-        // 2. 손가락(또는 마우스)이 움직일 때 (스크롤 감지)
         card.addEventListener('pointermove', (e) => {
-            // 위아래로 10px 이상 움직였다면 스크롤로 간주
             if (Math.abs(e.clientY - startY) > 10) {
-                clearTimeout(flipTimer); // 뒤집기 취소
-                card.classList.remove('flipped'); // 이미 뒤집혔다면 닫기
+                clearTimeout(flipTimer);
+                card.classList.remove('flipped');
             }
         });
 
-        // 3. 카드를 다시 원래대로 덮는 공통 함수
         const hideCard = () => {
             clearTimeout(flipTimer);
             card.classList.remove('flipped');
         };
 
-        // 4. 손을 떼거나, 화면 밖으로 나가거나, 스크롤로 인해 터치가 취소될 때 모두 덮기
         card.addEventListener('pointerup', hideCard);
         card.addEventListener('pointerleave', hideCard);
         card.addEventListener('pointercancel', hideCard);
-
-        // 모바일에서 길게 눌렀을 때 복사 메뉴(컨텍스트 메뉴)가 뜨는 것 방지
-        card.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
+        card.addEventListener('contextmenu', (e) => e.preventDefault());
 
         grid.appendChild(card);
     });

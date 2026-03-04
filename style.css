@@ -508,3 +508,32 @@ footer a:hover {
     background-color: #ebf5fb; /* 아주 연한 파란색 배경 */
     border-radius: 4px; /* 배경 모서리를 둥글게 */
 }
+
+/* --- 단어장 필터 (번호 버튼) --- */
+.vocab-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap; /* 버튼이 많아지면 다음 줄로 부드럽게 넘김 */
+}
+
+.filter-btn {
+    padding: 6px 14px;
+    border: 2px solid #3498db;
+    background: white;
+    color: #3498db;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    background: #ebf5fb;
+}
+
+.filter-btn.active {
+    background: #3498db;
+    color: white;
+}

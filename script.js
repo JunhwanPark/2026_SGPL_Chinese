@@ -414,9 +414,17 @@ function drawRandomVocab() {
         return;
     }
 
-    // 전체 단어 배열을 무작위로 섞기 (Fisher-Yates 알고리즘 응용)
-    const shuffled = [...allVocabData].sort(() => 0.5 - Math.random());
-    // 섞은 배열에서 10개만 추출 (단어가 10개 미만이면 있는 만큼만 추출)
+    // 중복 제거: 한자(word)를 기준으로 중복된 단어를 하나로 합칩니다.
+    const uniqueVocabMap = new Map();
+    allVocabData.forEach(item => {
+        // Map은 키(key)가 중복되면 마지막 값으로 덮어쓰기 때문에 자동으로 중복이 제거됩니다.
+        uniqueVocabMap.set(item.word, item);
+    });
+    const uniqueVocabData = Array.from(uniqueVocabMap.values());
+
+    // 중복이 제거된 깨끗한 배열을 무작위로 섞습니다.
+    const shuffled = [...uniqueVocabData].sort(() => 0.5 - Math.random());
+
     const selected = shuffled.slice(0, 10);
 
     selected.forEach(item => {

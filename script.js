@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', () => {
             chapterItem.className = 'chapter-item';
             chapterItem.textContent = chapter;
 
-            chapterItem.addEventListener('click', () => {
+            chapterItem.addEventListener('click', async () => {
                 // 기존에 강조된 모든 단원의 강조 효과(.active-chapter) 제거
                 const allChapterItems = document.querySelectorAll('.chapter-list li');
                 allChapterItems.forEach(item => {
@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 chapterItem.classList.add('active-chapter');
 
                 const displayTitle = `【${subject}】${chapter}`;
-                loadContent(displayTitle, studyData[subject][chapter]);
+                await loadContent(displayTitle, studyData[subject][chapter]);
 
                 if (window.innerWidth <= 768) {
                     document.getElementById('content-area').scrollIntoView({ behavior: 'smooth' });

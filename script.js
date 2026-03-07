@@ -583,3 +583,104 @@ copyIdBtn.addEventListener('click', async () => {
         alert('복사를 지원하지 않는 환경입니다. 위챗 ID를 직접 드래그해서 복사해 주세요.');
     }
 });
+
+// ==========================================
+// 🔒 이스터에그: 나만의 비밀 노트 로직
+// ==========================================
+const secretTrigger = document.getElementById('secret-trigger');
+const secretContainer = document.getElementById('secret-container');
+const closeSecretBtn = document.getElementById('close-secret-btn');
+const secretSidebarMenu = document.getElementById('secret-sidebar-menu'); // 👈 사이드바 ID로 변경
+const secretContentArea = document.getElementById('secret-content-area');
+
+// 비밀 노트 파일 목록 (원하시는 마크다운 파일 경로를 적어주세요)
+const secretFiles = [
+    { title: "2026-03-04 정리", path: "secret/2026-03-04.md" },
+    { title: "2026-03-05 정리", path: "secret/2026-03-05.md" },
+    { title: "2026-03-06 정리", path: "secret/2026-03-06.md" },
+];
+
+let clickCount = 0;
+let clickTimer;
+
+if (secretTrigger) {
+    secretTrigger.addEventListener('click', () => {
+        clickCount++;
+
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { clickCount = 0; }, 500);
+
+        // 👇 5번 연속 클릭 시 암호 묻지 않고 바로 진입!
+        if (clickCount === 5) {
+            clickCount = 0;
+            openSecretMode();
+        }
+    });
+}
+
+// 비밀 모드 열기
+function openSecretMode() {
+    // 기존 학습 목차들 숨기기
+    document.getElementById('menu-container').style.display = 'none';
+    const vocabMenu = document.getElementById('vocab-menu-container');
+    if (vocabMenu) vocabMenu.classList.add('hidden');
+
+    // 기존 본문 콘텐츠 숨기기
+    document.getElementById('content-title').style.display = 'none';
+    document.getElementById('audio-container').classList.add('hidden');
+    document.getElementById('script-container').classList.add('hidden');
+    document.getElementById('vocab-container').classList.add('hidden');
+
+    // 👇 비밀 목차(사이드바)와 비밀 영역 켜기
+    secretSidebarMenu.classList.remove('hidden');
+    secretContainer.classList.remove('hidden');
+    renderSecretMenu();
+}
+
+// 비밀 모드 닫기
+closeSecretBtn.addEventListener('click', () => {
+    secretContainer.classList.add('hidden');
+    secretSidebarMenu.classList.add('hidden'); // 👈 닫을 때 비밀 목차도 같이 숨김
+    document.getElementById('mode-study').click();
+});
+
+// 비밀 노트 버튼 생성 (사이드바에 세로로 배치)
+function renderSecretMenu() {
+    // 사이드바 전용 제목과 버튼 그룹 추가
+    secretSidebarMenu.innerHTML = `
+        <h3 style="margin-bottom: 15px; font-size: 0.95rem; color: #e74c3c; text-align: center;">🔒 비밀 노트 목록</h3>
+        <div id="secret-btn-group" style="display: flex; flex-direction: column; gap: 8px;"></div>
+    `;
+
+    const btnGroup = document.getElementById('secret-btn-group');
+
+    secretFiles.forEach(file => {
+        const btn = document.createElement('button');
+        btn.className = 'vocab-filter-btn';
+        btn.style.width = '100%'; // 사이드바 너비에 맞게 꽉 채움
+        btn.textContent = file.title;
+
+        btn.addEventListener('click', async () => {
+            // 버튼 하이라이트 효과
+            document.querySelectorAll('#secret-btn-group button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 마크다운 파일 불러오기
+            try {
+                const response = await fetch(file.path);
+                if (!response.ok) throw new Error("문서를 찾을 수 없습니다.");
+                const text = await response.text();
+                secretContentArea.innerHTML = marked.parse(text);
+            } catch (error) {
+                secretContentArea.innerHTML = `<p style="color:red;">오류: ${file.path} 파일을 불러오지 못했습니다.</p>`;
+            }
+
+            // 👇 모바일 환경에서 목록 클릭 시 본문으로 자동 스크롤
+            if (window.innerWidth <= 768) {
+                document.getElementById('content-area').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        btnGroup.appendChild(btn);
+    });
+}

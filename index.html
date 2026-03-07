@@ -26,8 +26,8 @@
             </a>
 
             <div id="menu-container"></div>
-
             <div id="vocab-menu-container" class="hidden"></div>
+            <div id="secret-sidebar-menu" class="hidden"></div>
         </nav>
 
         <main id="content-area">
@@ -58,13 +58,24 @@
                 </div>
                 <div id="flashcard-grid"></div>
             </div>
+
+            <div id="secret-container" class="hidden">
+                <div class="vocab-header">
+                    <h2>🔒 비밀 노트</h2>
+                    <button id="close-secret-btn" class="copy-btn" style="background-color: #e74c3c; width: auto; padding: 5px 15px; margin: 0;">닫기</button>
+                </div>
+
+                <div id="secret-content-area" class="markdown-body" style="background: #fff9c4; padding: 20px; border-radius: 8px;">
+                    <p>목차에서 노트를 선택해 주세요.</p>
+                </div>
+            </div>
         </main>
     </div>
 
     <button id="top-btn" title="맨 위로 가기">↑ Top</button>
 
     <footer>
-        <p>&copy; 2026 <a href="#" id="wechat-link">Junhwan Park</a>. All rights reserved.</p>
+        <p><span id="secret-trigger" style="cursor: default;">&copy; 2026</span> <a href="#" id="wechat-link">Junhwan Park</a>. All rights reserved.</p>
     </footer>
 
     <div id="wechat-modal" class="hidden">

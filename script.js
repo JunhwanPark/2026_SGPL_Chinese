@@ -151,6 +151,7 @@ const vocabFiles = [
     "vocab/v03-03.txt",
     "vocab/v03-04.txt",
     "vocab/v03-05.txt",
+    "vocab/v03-06.txt",
 ];
 
 let allVocabData = [];

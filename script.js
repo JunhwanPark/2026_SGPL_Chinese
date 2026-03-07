@@ -595,9 +595,9 @@ const secretContentArea = document.getElementById('secret-content-area');
 
 // 비밀 노트 파일 목록 (원하시는 마크다운 파일 경로를 적어주세요)
 const secretFiles = [
-    { title: "2026-03-04 정리", path: "secret/2026-03-04.md" },
-    { title: "2026-03-05 정리", path: "secret/2026-03-05.md" },
-    { title: "2026-03-06 정리", path: "secret/2026-03-06.md" },
+    { title: "2026-03-04 복습", path: "secret/2026-03-04.md" },
+    { title: "2026-03-05 복습", path: "secret/2026-03-05.md" },
+    { title: "2026-03-06 복습", path: "secret/2026-03-06.md" },
 ];
 
 let clickCount = 0;
@@ -648,7 +648,6 @@ closeSecretBtn.addEventListener('click', () => {
 function renderSecretMenu() {
     // 사이드바 전용 제목과 버튼 그룹 추가
     secretSidebarMenu.innerHTML = `
-        <h3 style="margin-bottom: 15px; font-size: 0.95rem; color: #e74c3c; text-align: center;">🔒 비밀 노트 목록</h3>
         <div id="secret-btn-group" style="display: flex; flex-direction: column; gap: 8px;"></div>
     `;
 

@@ -345,6 +345,12 @@ modeStudyBtn.addEventListener('click', () => {
             audioContainer.classList.remove('hidden');
         }
     }
+
+    // 👇 [추가됨] 비밀 모드 흔적 완벽히 지우기
+    const secretSidebar = document.getElementById('secret-sidebar-menu');
+    const secretContent = document.getElementById('secret-container');
+    if (secretSidebar) secretSidebar.classList.add('hidden');
+    if (secretContent) secretContent.classList.add('hidden');
 });
 
 // '단어장 연습' 버튼 클릭 시
@@ -363,6 +369,12 @@ modeVocabBtn.addEventListener('click', () => {
     audioContainer.classList.add('hidden');
     scriptContainer.classList.add('hidden');
     vocabContainer.classList.remove('hidden');
+
+    // 👇 [추가됨] 비밀 모드 흔적 완벽히 지우기
+    const secretSidebar = document.getElementById('secret-sidebar-menu');
+    const secretContent = document.getElementById('secret-container');
+    if (secretSidebar) secretSidebar.classList.add('hidden');
+    if (secretContent) secretContent.classList.add('hidden');
 
     if (allVocabData.length === 0) {
         loadAllVocabAndDraw();
@@ -589,7 +601,6 @@ copyIdBtn.addEventListener('click', async () => {
 // ==========================================
 const secretTrigger = document.getElementById('secret-trigger');
 const secretContainer = document.getElementById('secret-container');
-const closeSecretBtn = document.getElementById('close-secret-btn');
 const secretSidebarMenu = document.getElementById('secret-sidebar-menu'); // 👈 사이드바 ID로 변경
 const secretContentArea = document.getElementById('secret-content-area');
 
@@ -636,13 +647,6 @@ function openSecretMode() {
     secretContainer.classList.remove('hidden');
     renderSecretMenu();
 }
-
-// 비밀 모드 닫기
-closeSecretBtn.addEventListener('click', () => {
-    secretContainer.classList.add('hidden');
-    secretSidebarMenu.classList.add('hidden'); // 👈 닫을 때 비밀 목차도 같이 숨김
-    document.getElementById('mode-study').click();
-});
 
 // 비밀 노트 버튼 생성 (사이드바에 세로로 배치)
 function renderSecretMenu() {

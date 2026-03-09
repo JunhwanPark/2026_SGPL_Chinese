@@ -607,6 +607,7 @@ const secretContentArea = document.getElementById('secret-content-area');
 
 // 비밀 노트 파일 목록 (원하시는 마크다운 파일 경로를 적어주세요)
 const secretFiles = [
+    { title: "2026-02-12 복습", path: "secret/2026-02-12.md" },
     { title: "2026-03-04 복습", path: "secret/2026-03-04.md" },
     { title: "2026-03-05 복습", path: "secret/2026-03-05.md" },
     { title: "2026-03-06 복습", path: "secret/2026-03-06.md" },

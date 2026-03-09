@@ -610,6 +610,7 @@ const secretFiles = [
     { title: "2026-03-04 복습", path: "secret/2026-03-04.md" },
     { title: "2026-03-05 복습", path: "secret/2026-03-05.md" },
     { title: "2026-03-06 복습", path: "secret/2026-03-06.md" },
+    { title: "2026-03-09 복습", path: "secret/2026-03-09.md" },
 ];
 
 let clickCount = 0;

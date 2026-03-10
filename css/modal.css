@@ -27,12 +27,14 @@
     margin-bottom: 1rem;
     color: #2c3e50;
 }
-.modal-content img {
-    width: 150px;
-    height: 150px;
-    margin: 1rem 0;
+.modal-content .wechat-qr-img {
+    width: 180px;
+    height: 180px;
+    margin: 15px auto;
+    display: block;
     border-radius: 8px;
-    border: 1px solid #eee;
+    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 .modal-desc {
     font-size: 0.9rem;

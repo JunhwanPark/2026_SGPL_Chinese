@@ -1,92 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>주재8반 学习</title>
-    <link rel="icon" href="favicon-32x32.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
-    <header>
-        <h1>2026🇨🇳驻在员8班</h1>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>주재8반 学习</title>
+        <link rel="icon" href="favicon-32x32.png" type="image/png" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
 
-    <div class="container">
-        <nav id="sidebar">
-            <div id="mode-switch">
-                <button id="mode-study" class="mode-btn active">📖 본문 학습</button>
-                <button id="mode-vocab" class="mode-btn">📇 단어장 연습</button>
-            </div>
+        <link rel="stylesheet" href="css/style.css" />
 
-            <a href="https://platform.samsungcic.com/#/connect/LCB20260116100167336" target="_blank" rel="noopener noreferrer" id="cic-link-btn">
-                <i class="fas fa-external-link-alt"></i> CiC 캠퍼스 가기
-            </a>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <h1>2026🇨🇳驻在员8班</h1>
+        </header>
 
-            <div id="menu-container"></div>
-            <div id="vocab-menu-container" class="hidden"></div>
-            <div id="secret-sidebar-menu" class="hidden"></div>
-        </nav>
-
-        <main id="content-area">
-            <h2 id="content-title">학습할 단원을 선택해주세요.</h2>
-
-            <div id="audio-container" class="hidden">
-                <audio id="audio-player" controls controlsList="noplaybackrate nodownload">
-                    <source id="audio-source" src="" type="audio/mpeg">
-                    브라우저가 오디오 플레이어를 지원하지 않습니다.
-                </audio>
-
-                <div id="speed-control">
-                    <span class="speed-label">재생 속도:</span>
-                    <button id="speed-down" class="speed-btn">◀</button>
-                    <span id="speed-display">1.0x</span>
-                    <button id="speed-up" class="speed-btn">▶</button>
-                </div>
-            </div>
-
-            <div id="script-container" class="hidden">
-                <div id="script-text"></div>
-            </div>
-
-            <div id="vocab-container" class="hidden">
-                <div class="vocab-header">
-                    <h2>📇 랜덤 단어장</h2>
-                    <button id="refresh-vocab-btn">🔄 새로운 단어</button>
-                </div>
-                <div id="flashcard-grid"></div>
-            </div>
-
-            <div id="secret-container" class="hidden">
-                <div class="vocab-header">
-                    <h2>🔒 마이 노트</h2>
+        <div class="container">
+            <nav id="sidebar">
+                <div id="mode-switch">
+                    <button id="mode-study" class="mode-btn active">📖 본문 학습</button>
+                    <button id="mode-vocab" class="mode-btn">📇 단어장 연습</button>
                 </div>
 
-                <div id="secret-content-area" class="markdown-body" style="background: #fff9c4; padding: 20px; border-radius: 8px;">
-                    <p>목차에서 노트를 선택해 주세요.</p>
+                <a
+                    href="https://platform.samsungcic.com/#/connect/LCB20260116100167336"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    id="cic-link-btn"
+                >
+                    <i class="fas fa-external-link-alt"></i> CiC 캠퍼스 가기
+                </a>
+
+                <div id="menu-container"></div>
+                <div id="vocab-menu-container" class="hidden"></div>
+                <div id="secret-sidebar-menu" class="hidden"></div>
+            </nav>
+
+            <main id="content-area">
+                <h2 id="content-title">학습할 단원을 선택해주세요.</h2>
+
+                <div id="audio-container" class="hidden">
+                    <audio id="audio-player" controls controlsList="noplaybackrate nodownload">
+                        <source id="audio-source" src="" type="audio/mpeg" />
+                        브라우저가 오디오 플레이어를 지원하지 않습니다.
+                    </audio>
+
+                    <div id="speed-control">
+                        <span class="speed-label">재생 속도:</span>
+                        <button id="speed-down" class="speed-btn">◀</button>
+                        <span id="speed-display">1.0x</span>
+                        <button id="speed-up" class="speed-btn">▶</button>
+                    </div>
                 </div>
-            </div>
-        </main>
-    </div>
 
-    <button id="top-btn" title="맨 위로 가기">↑ Top</button>
+                <div id="script-container" class="hidden">
+                    <div id="script-text"></div>
+                </div>
 
-    <footer>
-        <p><span id="secret-trigger" style="cursor: default;">&copy; 2026</span> <a href="#" id="wechat-link">Junhwan Park</a>. All rights reserved.</p>
-    </footer>
+                <div id="vocab-container" class="hidden">
+                    <div class="vocab-header">
+                        <h2>📇 랜덤 단어장</h2>
+                        <button id="refresh-vocab-btn">🔄 새로운 단어</button>
+                    </div>
+                    <div id="flashcard-grid"></div>
+                </div>
 
-    <div id="wechat-modal" class="hidden">
-        <div class="modal-content">
-            <span id="close-modal" class="close-btn">&times;</span>
-            <h3><i class="fab fa-weixin" style="color: #1AAD19;"></i> WeChat 연락처</h3>
-            <p>위챗 ID: <strong id="wechat-id">piao3jun4huan4</strong></p>
-            <button id="copy-id-btn" class="copy-btn">ID 복사하기</button>
-            <p class="modal-desc">ID를 복사하여 위챗에서 친구 추가를 해주세요!</p>
+                <div id="secret-container" class="hidden">
+                    <div class="vocab-header">
+                        <h2>🔒 마이 노트</h2>
+                    </div>
+
+                    <div
+                        id="secret-content-area"
+                        class="markdown-body"
+                        style="background: #fff9c4; padding: 20px; border-radius: 8px"
+                    >
+                        <p>목차에서 노트를 선택해 주세요.</p>
+                    </div>
+                </div>
+            </main>
         </div>
-    </div>
 
-    <script src="script.js"></script>
-</body>
+        <button id="top-btn" title="맨 위로 가기">↑ Top</button>
+
+        <footer>
+            <p>
+                <span id="secret-trigger" style="cursor: default">&copy; 2026</span>
+                <a href="#" id="wechat-link">Junhwan Park</a>. All rights reserved.
+            </p>
+        </footer>
+
+        <div id="wechat-modal" class="hidden">
+            <div class="modal-content">
+                <span id="close-modal" class="close-btn">&times;</span>
+                <h3><i class="fab fa-weixin" style="color: #1aad19"></i> WeChat 연락처</h3>
+                <p>위챗 ID: <strong id="wechat-id">piao3jun4huan4</strong></p>
+                <button id="copy-id-btn" class="copy-btn">ID 복사하기</button>
+                <p class="modal-desc">ID를 복사하여 위챗에서 친구 추가를 해주세요!</p>
+            </div>
+        </div>
+
+        <script type="module" src="js/main.js"></script>
+    </body>
 </html>

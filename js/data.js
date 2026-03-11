@@ -138,6 +138,14 @@ export const studyData = {
             audioFile: 'data/audio/04-08.mp3',
         },
     },
+    Coaching型领导力技巧: {
+        'Part1.Coaching管理三要素': {
+            mdFile: 'data/study/05-01.md',
+        },
+        'Part2: GROW 结构': {
+            mdFile: 'data/study/05-02.md',
+        },
+    },
 };
 
 export const vocabFiles = [

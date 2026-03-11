@@ -141,21 +141,22 @@ export const studyData = {
 };
 
 export const vocabFiles = [
-    'vocab/v02-12.txt',
-    'vocab/v02-13.txt',
-    'vocab/v02-19.txt',
-    'vocab/v02-20.txt',
-    'vocab/v02-23.txt',
-    'vocab/v02-24.txt',
-    'vocab/v02-25.txt',
-    'vocab/v02-26.txt',
-    'vocab/v02-27.txt',
-    'vocab/v03-03.txt',
-    'vocab/v03-04.txt',
-    'vocab/v03-05.txt',
-    'vocab/v03-06.txt',
-    'vocab/v03-09.txt',
-    'vocab/v03-10.txt',
+    'data/vocab/v02-12.txt',
+    'data/vocab/v02-13.txt',
+    'data/vocab/v02-19.txt',
+    'data/vocab/v02-20.txt',
+    'data/vocab/v02-23.txt',
+    'data/vocab/v02-24.txt',
+    'data/vocab/v02-25.txt',
+    'data/vocab/v02-26.txt',
+    'data/vocab/v02-27.txt',
+    'data/vocab/v03-03.txt',
+    'data/vocab/v03-04.txt',
+    'data/vocab/v03-05.txt',
+    'data/vocab/v03-06.txt',
+    'data/vocab/v03-09.txt',
+    'data/vocab/v03-10.txt',
+    'data/vocab/v03-11.txt',
 ];
 
 export const secretFiles = [

@@ -161,6 +161,15 @@ export const vocabFiles = [
 
 export const secretFiles = [
     { title: '2026-02-12 복습', path: 'data/secret/2026-02-12.md' },
+    { title: '2026-02-13 복습', path: 'data/secret/2026-02-13.md' },
+    { title: '2026-02-19 복습', path: 'data/secret/2026-02-19.md' },
+    { title: '2026-02-20 복습', path: 'data/secret/2026-02-20.md' },
+    { title: '2026-02-23 복습', path: 'data/secret/2026-02-23.md' },
+    { title: '2026-02-24 복습', path: 'data/secret/2026-02-24.md' },
+    { title: '2026-02-25 복습', path: 'data/secret/2026-02-25.md' },
+    { title: '2026-02-26 복습', path: 'data/secret/2026-02-26.md' },
+    { title: '2026-02-27 복습', path: 'data/secret/2026-02-27.md' },
+    { title: '2026-03-03 복습', path: 'data/secret/2026-03-03.md' },
     { title: '2026-03-04 복습', path: 'data/secret/2026-03-04.md' },
     { title: '2026-03-05 복습', path: 'data/secret/2026-03-05.md' },
     { title: '2026-03-06 복습', path: 'data/secret/2026-03-06.md' },

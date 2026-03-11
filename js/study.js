@@ -124,7 +124,10 @@ async function loadContent(title, fileData) {
 
         audioContainer.classList.remove('hidden');
     } else {
+        audioPlayer.pause();
         audioSource.removeAttribute('src');
+        audioPlayer.load();
+
         audioContainer.classList.add('hidden');
     }
 }

@@ -166,6 +166,7 @@ export const secretFiles = [
     { title: '2026-03-06 복습', path: 'data/secret/2026-03-06.md' },
     { title: '2026-03-09 복습', path: 'data/secret/2026-03-09.md' },
     { title: '2026-03-10 복습', path: 'data/secret/2026-03-10.md' },
+    { title: '2026-03-11 복습', path: 'data/secret/2026-03-11.md' },
 ];
 
 export const playbackSpeeds = [0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5];

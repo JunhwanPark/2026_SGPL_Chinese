@@ -86,30 +86,6 @@ header {
     color: white;
 }
 
-#cic-link-btn {
-    display: block;
-    background-color: #9b59b6;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 1.5rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition:
-        background-color 0.2s,
-        transform 0.2s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-#cic-link-btn:hover {
-    background-color: #8e44ad;
-    transform: translateY(-2px);
-}
-#cic-link-btn i {
-    margin-right: 5px;
-}
-
 footer {
     text-align: center;
     padding: 2rem 1rem 1rem;

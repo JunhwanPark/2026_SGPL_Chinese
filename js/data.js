@@ -139,11 +139,14 @@ export const studyData = {
         },
     },
     Coaching型领导力技巧: {
-        'Part1.Coaching管理三要素': {
+        'Part1: Coaching管理三要素': {
             mdFile: 'data/study/05-01.md',
         },
         'Part2: GROW 结构': {
             mdFile: 'data/study/05-02.md',
+        },
+        'Part3: CLEAR 复杂管理对话模型': {
+            mdFile: 'data/study/05-03.md',
         },
     },
 };

@@ -169,6 +169,7 @@ export const vocabFiles = [
     'data/vocab/v03-10.txt',
     'data/vocab/v03-11.txt',
     'data/vocab/v03-12.txt',
+    'data/vocab/v03-13.txt',
 ];
 
 export const secretFiles = [
